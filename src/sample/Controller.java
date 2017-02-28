@@ -62,6 +62,6 @@ public class Controller implements Initializable {
     }
 
     private void SortOneBubble() {
-
+        // TODO: Make bubblesort
     }
 }
