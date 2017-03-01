@@ -1,7 +1,7 @@
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
@@ -14,6 +14,8 @@ import java.util.ResourceBundle;
 
 @SuppressWarnings("unchecked")
 public class Controller implements Initializable {
+
+    Scene scene;
     ArrayList<Integer> list;
     String sortingtype = "BubbleSort";
     Random random = new Random();
@@ -29,9 +31,7 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        randomchart.setLegendVisible(false);
-        randomchart.setAnimated(false);
-
+        randomchart.getXAxis().setTickLabelsVisible(false);
         list = new ArrayList<>();
         for (int i = 1; i <= n; i++) {
             list.add(i);
@@ -44,7 +44,7 @@ public class Controller implements Initializable {
         series = new XYChart.Series();
 
         for (int i = 0; i < list.size(); i++) {
-            series.getData().add(new XYChart.Data(list.get(i).toString(), list.get(i)));
+            series.getData().add(new XYChart.Data(""+i, list.get(i)));
         }
         randomchart.getData().addAll(series);
     }
@@ -72,10 +72,8 @@ public class Controller implements Initializable {
 
     private void UpdateGUI() {
         // TODO: Fix GUI update
-        series = new XYChart.Series();
-
-        for (Integer aList : list) {
-            series.getData().add(new XYChart.Data(aList.toString(), aList));
+        for (int i = 0; i < list.size(); i++) {
+            series.getData().set(i, new XYChart.Data(""+i, list.get(i)));
         }
     }
 
@@ -84,7 +82,6 @@ public class Controller implements Initializable {
     }
 
     private void SortOneBubble() {
-        // TODO: Make bubblesort
         for (int i = 0; i < list.size() - 1; i++) {
             if (list.get(i) > list.get(i + 1)) {
                 int temp = list.get(i);

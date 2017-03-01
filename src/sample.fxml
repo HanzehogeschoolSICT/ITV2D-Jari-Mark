@@ -12,7 +12,7 @@
 <?import java.lang.String?>
 <GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <children>
-      <BarChart fx:id="randomchart" GridPane.rowIndex="1">
+      <BarChart fx:id="randomchart" GridPane.rowIndex="1" legendVisible="false" animated="false">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>
