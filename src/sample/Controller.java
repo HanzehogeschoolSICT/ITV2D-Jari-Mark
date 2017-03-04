@@ -6,7 +6,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 
 import java.net.URL;
@@ -15,26 +14,23 @@ import java.util.Random;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
+    private Thread t = null;
     private int n = 10;
     private GraphicsContext gc;
     private ArrayList<Integer> list;
     private int maxval = 0;
-    private Phase phase = Phase.SELECTING;
-    private int switchpos1;
-    private int switchpos2;
-
     @FXML
     private Canvas barcanvas;
-    @FXML
-    private Button stepbutton;
 
     @FXML
-    void DoStep(ActionEvent event) {
-        BubbleStep();
-    }
-
-    private void BubbleStep() {
-
+    synchronized void DoStep(ActionEvent event) {
+        if (t == null) {
+            t = new Thread(new BubbleThread());
+            t.start();
+        }
+        synchronized (t) {
+            t.notify();
+        }
     }
 
     // source: http://code.makery.ch/blog/javafx-dialogs-official/
@@ -78,7 +74,19 @@ public class Controller implements Initializable {
         gc.clearRect(0, 0, barcanvas.getWidth(), barcanvas.getHeight());
     }
 
-    private enum Phase {
-        SELECTING, SWITCHING
+    class BubbleThread implements Runnable {
+
+        @Override
+        public void run() {
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i) > list.get(i + 1)) {
+                    clear();
+                    for (int j = 0; j < list.size(); j++) {
+                        Color col = (j == i || j == i + 1) ? Color.GREEN : Color.RED;
+                        drawBar(j, list.get(i), col);
+                    }
+                }
+            }
+        }
     }
 }
