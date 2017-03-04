@@ -34,21 +34,7 @@ public class Controller implements Initializable {
     }
 
     private void BubbleStep() {
-        switch (phase) {
-            case SELECTING:
-                boolean result = doSelect();
-                if (result){
-                    phase = Phase.SWITCHING;
-                } else {
-                    sortedMessage();
-                }
-                break;
 
-            case SWITCHING:
-                doSwitch();
-                phase = Phase.SELECTING;
-                break;
-        }
     }
 
     // source: http://code.makery.ch/blog/javafx-dialogs-official/
@@ -58,41 +44,6 @@ public class Controller implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText("The list is sorted!");
         alert.showAndWait();
-    }
-
-    private void doSwitch() {
-        int temp1 = list.get(switchpos1);
-        int temp2 = list.get(switchpos2);
-        list.set(switchpos1, temp2);
-        list.set(switchpos2, temp1);
-        clear();
-        for (int i = 0; i < list.size(); i++) {
-            if (i == switchpos1 || i == switchpos2) {
-                drawBar(i, list.get(i), Color.GREEN);
-            } else {
-                drawBar(i, list.get(i), Color.RED);
-            }
-        }
-    }
-
-    private boolean doSelect() {
-        clear();
-        boolean found = false;
-        for (int i = 0; i < list.size(); i++) {
-            if (i + 1 < list.size() && list.get(i) > list.get(i + 1) && !found) {
-                drawBar(i, list.get(i), Color.GREEN);
-                drawBar(i + 1, list.get(i + 1), Color.GREEN);
-                i++;
-                found = true;
-                switchpos1 = i - 1;
-                switchpos2 = i;
-                continue;
-            } else {
-                drawBar(i, list.get(i), Color.RED);
-            }
-            drawBar(i, list.get(i), Color.RED);
-        }
-        return found;
     }
 
     @Override
