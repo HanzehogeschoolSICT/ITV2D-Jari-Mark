@@ -7,6 +7,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.paint.Color;
+import javafx.scene.text.TextAlignment;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class Controller implements Initializable {
             t = new Thread(new BubbleThread());
             t.start();
         }
+
         synchronized (t) {
             t.notify();
         }
@@ -62,12 +64,24 @@ public class Controller implements Initializable {
 
     private void drawBar(int xaxis, int yaxis, Color color) {
         gc = barcanvas.getGraphicsContext2D();
-        gc.setFill(color);
-        gc.setStroke(Color.BLACK);
+        int textheight = 20;
         int xoffset = (int) (barcanvas.getWidth() / n);
         int yoffset = (int) (barcanvas.getHeight() / maxval);
-        gc.fillRect((xaxis * xoffset), barcanvas.getHeight() - yaxis * yoffset, xoffset, yaxis * yoffset);
-        gc.strokeRect((xaxis * xoffset - 1), barcanvas.getHeight() - yaxis * yoffset, xoffset + 1, yaxis * yoffset);
+
+        gc.setFill(color);
+        gc.setStroke(Color.BLACK);
+        gc.fillRect(    (xaxis * xoffset),
+                        barcanvas.getHeight() - yaxis * yoffset, xoffset,
+                        yaxis * yoffset);
+        gc.strokeRect(  (xaxis * xoffset - 1),
+                        barcanvas.getHeight() - yaxis * yoffset,
+                        xoffset + 1,
+                        yaxis * yoffset);
+        gc.setTextAlign(TextAlignment.CENTER);
+        gc.setFill(Color.WHITE);
+        gc.fillText(    Integer.toString(yaxis),
+                        (xaxis * xoffset) + (xoffset / 2),
+                        barcanvas.getHeight() - yaxis * yoffset + textheight);
     }
 
     private void clear() {
@@ -83,7 +97,14 @@ public class Controller implements Initializable {
                     clear();
                     for (int j = 0; j < list.size(); j++) {
                         Color col = (j == i || j == i + 1) ? Color.GREEN : Color.RED;
-                        drawBar(j, list.get(i), col);
+                        drawBar(j, list.get(j), col);
+                    }
+                    synchronized (this) {
+                        try {
+                            this.wait();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
