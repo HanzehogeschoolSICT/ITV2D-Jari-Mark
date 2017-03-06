@@ -19,7 +19,6 @@ public class Controller implements Initializable {
     private int n = 10;
     private GraphicsContext gc;
     private ArrayList<Integer> list;
-    private int maxval = 0;
     private Object lock;
 
     @FXML
@@ -56,8 +55,6 @@ public class Controller implements Initializable {
         Random random = new Random();
         for (int i = 0; i < list.size(); i++) {
             int temp = list.remove(random.nextInt(list.size()));
-            if (temp > maxval)
-                maxval = temp;
             list.add(temp);
         }
         for (int i = 0; i < list.size(); i++) {
@@ -69,7 +66,7 @@ public class Controller implements Initializable {
         gc = barcanvas.getGraphicsContext2D();
         int textheight = 20;
         int xoffset = (int) (barcanvas.getWidth() / n);
-        int yoffset = (int) (barcanvas.getHeight() / maxval);
+        int yoffset = (int) (barcanvas.getHeight() / n);
 
         gc.setFill(color);
         gc.setStroke(Color.BLACK);
@@ -104,13 +101,7 @@ public class Controller implements Initializable {
                                 Color col = (j == i || j == i + 1) ? Color.GREEN : Color.RED;
                                 drawBar(j, list.get(j), col);
                             }
-                            synchronized (lock) {
-                                try {
-                                    lock.wait();
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                            }
+                            waitforbutton();
                             int temp1 = list.get(i);
                             int temp2 = list.get(i + 1);
                             list.set(i, temp2);
@@ -120,13 +111,7 @@ public class Controller implements Initializable {
                                 Color col = (j == i || j == i + 1) ? Color.GREEN : Color.RED;
                                 drawBar(j, list.get(j), col);
                             }
-                            synchronized (lock) {
-                                try {
-                                    lock.wait();
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                            }
+                            waitforbutton();
                         }
                     }
                 }
@@ -135,12 +120,16 @@ public class Controller implements Initializable {
                     drawBar(j, list.get(j), col);
                 }
                 Platform.runLater(() -> sortedMessage());
-                synchronized (lock) {
-                    try {
-                        lock.wait();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                waitforbutton();
+            }
+        }
+
+        private void waitforbutton() {
+            synchronized (lock) {
+                try {
+                    lock.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         }
