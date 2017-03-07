@@ -6,7 +6,7 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
-public class BubbleSort extends Sorter implements Runnable {
+public class BubbleSort extends SorterStructure implements Runnable {
 
     public BubbleSort(ArrayList<Integer> list, Controller controller, Object lock) {
         super(list, controller, lock);

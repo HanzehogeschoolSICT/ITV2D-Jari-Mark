@@ -5,15 +5,15 @@ import GUI.Controller;
 import java.util.ArrayList;
 
 /**
- * Sorter class to give a standard structure to the
+ * SorterStructure class to give a standard structure to the
  * sorters on which the Controller class can rely.
  */
-class Sorter {
+class SorterStructure {
     final ArrayList<Integer> list;
     final Controller controller;
     private final Object lock;
 
-    Sorter(ArrayList<Integer> list, Controller controller, Object lock) {
+    SorterStructure(ArrayList<Integer> list, Controller controller, Object lock) {
         this.list = list;
         this.controller = controller;
         this.lock = lock;
