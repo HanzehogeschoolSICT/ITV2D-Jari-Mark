@@ -43,6 +43,6 @@ public class BubbleSort extends SorterStructure implements Runnable {
             Color col = Color.GREEN;
             controller.drawBar(j, list.get(j), col);
         }
-        Platform.runLater(controller::sortedMessage);
+        Platform.runLater(() -> controller.AlertMessage("The list is sorted!"));
     }
 }

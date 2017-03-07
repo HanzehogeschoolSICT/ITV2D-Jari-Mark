@@ -2,13 +2,30 @@
 
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.Pane?>
-
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 <GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.112"
           xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller">
-   <Canvas fx:id="barcanvas" height="400.0" width="500.0"/>
-   <Pane prefHeight="54.0" prefWidth="200.0" GridPane.rowIndex="1">
-      <Button layoutX="14.0" layoutY="12.0" mnemonicParsing="false" onAction="#DoStep" text="Step"/>
-   </Pane>
+    <Canvas fx:id="barcanvas" height="400.0" width="500.0"/>
+    <Pane prefHeight="54.0" prefWidth="200.0" GridPane.rowIndex="1">
+        <Button layoutX="14.0" layoutY="12.0" mnemonicParsing="false" onAction="#DoStep" text="Step"/>
+        <ComboBox layoutX="336.0" layoutY="12.0" prefWidth="150.0" onAction="#SetSortString" promptText="BubbleSort" >
+            <items>
+                <FXCollections fx:factory="observableArrayList" >
+                    <String fx:value="BubbleSort" />
+                    <String fx:value="InsertionSort" />
+                    <String fx:value="QuickSort" />
+                </FXCollections>
+            </items>
+        </ComboBox>
+    </Pane>
+    <columnConstraints>
+        <ColumnConstraints/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints/>
+        <RowConstraints/>
+    </rowConstraints>
 </GridPane>
