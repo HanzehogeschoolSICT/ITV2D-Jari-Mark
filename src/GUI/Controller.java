@@ -1,11 +1,16 @@
 package GUI;
 
 import Sorters.BubbleSort;
+import Sorters.InsertionSort;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 
@@ -15,14 +20,18 @@ import java.util.Random;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
+    @FXML
+    public Button sortbutton;
     private Thread t = null;
     private int n = 10;
     private GraphicsContext gc;
     private ArrayList<Integer> list;
     private Object lock;
-
+    private String sortstring = "BubbleSort";
     @FXML
     private Canvas barcanvas;
+    @FXML
+    private ComboBox sortselector;
 
     /**
      * Initializes the list, randomizes it and draws it on the canvas.
@@ -46,10 +55,7 @@ public class Controller implements Initializable {
 
     @FXML
     synchronized void DoStep() {
-        if (t == null) {
-            t = new Thread(new BubbleSort(list, this, lock));
-            t.start();
-        }
+        StartThread();
 
         synchronized (lock) {
             lock.notify();
@@ -59,19 +65,22 @@ public class Controller implements Initializable {
     /**
      * source: http://code.makery.ch/blog/javafx-dialogs-official/
      * <p>
-     * Will make a message appear saying the list is sorted
+     * Will make a messagebox appear.
+     *
+     * @param message Message that will appear in the box.
      */
-    public void sortedMessage() {
+    public void AlertMessage(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("info");
         alert.setHeaderText(null);
-        alert.setContentText("The list is sorted!");
+        alert.setContentText(message);
         alert.showAndWait();
         ResetSort();
     }
 
     /**
      * Draws a bar.
+     *
      * @param xaxis int determines the place on the x axis.
      * @param yaxis int determines the height of the bar.
      * @param color Color determines the color of the bar.
@@ -101,10 +110,50 @@ public class Controller implements Initializable {
     /**
      * Clears the canvas so new things can be drawn.
      */
-    public void clear() { gc.clearRect(0, 0, barcanvas.getWidth(), barcanvas.getHeight()); }
+    public void clear() {
+        gc.clearRect(0, 0, barcanvas.getWidth(), barcanvas.getHeight());
+    }
 
     /**
      * Resets the t value so an other sorting method can be chosen.
      */
-    private void ResetSort() { t = null; }
+    private void ResetSort() {
+        sortselector.setDisable(false);
+        t = null;
+    }
+
+    public void SetSortString() {
+        sortstring = sortselector.getSelectionModel().getSelectedItem().toString();
+    }
+
+    public void DoCompleteSort() {
+        StartThread();
+        new Thread(new Stepper(t, lock)).start();
+    }
+
+    private void StartThread() {
+        if (t == null) {
+            sortselector.setDisable(true);
+            switch (sortstring) {
+                case "BubbleSort":
+                    t = new Thread(new BubbleSort(list, this, lock));
+                    break;
+
+                case "InsertionSort":
+                    t = new Thread(new InsertionSort(list, this, lock));
+                    break;
+
+                case "QuickSort":
+                    // TODO instantiate quicksort thread
+                    break;
+
+                default:
+                    AlertMessage("No sortingmethod selected");
+                    break;
+            }
+
+            assert t != null;
+            t.start();
+        }
+    }
 }
