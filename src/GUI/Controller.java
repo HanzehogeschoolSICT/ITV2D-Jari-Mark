@@ -1,11 +1,15 @@
 package GUI;
 
-import Sorters.*;
+import Sorters.BubbleSort;
+import Sorters.InsertionSort;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
@@ -16,16 +20,16 @@ import java.util.Random;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
+    @FXML
+    public Button sortbutton;
     private Thread t = null;
     private int n = 10;
     private GraphicsContext gc;
     private ArrayList<Integer> list;
     private Object lock;
     private String sortstring = "BubbleSort";
-
     @FXML
     private Canvas barcanvas;
-
     @FXML
     private ComboBox sortselector;
 
@@ -51,29 +55,7 @@ public class Controller implements Initializable {
 
     @FXML
     synchronized void DoStep() {
-        if (t == null) {
-            sortselector.setDisable(true);
-            switch (sortstring) {
-                case "BubbleSort":
-                    t = new Thread(new BubbleSort(list, this, lock));
-                    break;
-
-                case "InsertionSort":
-                    t = new Thread(new InsertionSort(list, this, lock));
-                    break;
-
-                case "QuickSort":
-                    // TODO instantiate quicksort thread
-                    break;
-
-                default:
-                    AlertMessage("No sortingmethod selected");
-                    break;
-            }
-
-            assert t != null;
-            t.start();
-        }
+        StartThread();
 
         synchronized (lock) {
             lock.notify();
@@ -142,5 +124,36 @@ public class Controller implements Initializable {
 
     public void SetSortString() {
         sortstring = sortselector.getSelectionModel().getSelectedItem().toString();
+    }
+
+    public void DoCompleteSort() {
+        StartThread();
+        new Thread(new Stepper(t, lock)).start();
+    }
+
+    private void StartThread() {
+        if (t == null) {
+            sortselector.setDisable(true);
+            switch (sortstring) {
+                case "BubbleSort":
+                    t = new Thread(new BubbleSort(list, this, lock));
+                    break;
+
+                case "InsertionSort":
+                    t = new Thread(new InsertionSort(list, this, lock));
+                    break;
+
+                case "QuickSort":
+                    // TODO instantiate quicksort thread
+                    break;
+
+                default:
+                    AlertMessage("No sortingmethod selected");
+                    break;
+            }
+
+            assert t != null;
+            t.start();
+        }
     }
 }
