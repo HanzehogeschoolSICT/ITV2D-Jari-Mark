@@ -1,7 +1,6 @@
 package GUI;
 
-import Sorters.BubbleSort;
-import javafx.event.ActionEvent;
+import Sorters.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
@@ -27,6 +26,9 @@ public class Controller implements Initializable {
     @FXML
     private Canvas barcanvas;
 
+    @FXML
+    private ComboBox sortselector;
+
     /**
      * Initializes the list, randomizes it and draws it on the canvas.
      */
@@ -50,13 +52,14 @@ public class Controller implements Initializable {
     @FXML
     synchronized void DoStep() {
         if (t == null) {
+            sortselector.setDisable(true);
             switch (sortstring) {
                 case "BubbleSort":
                     t = new Thread(new BubbleSort(list, this, lock));
                     break;
 
                 case "InsertionSort":
-                    // TODO instantiate insertionsort thread
+                    t = new Thread(new InsertionSort(list, this, lock));
                     break;
 
                 case "QuickSort":
@@ -68,6 +71,7 @@ public class Controller implements Initializable {
                     break;
             }
 
+            assert t != null;
             t.start();
         }
 
@@ -132,10 +136,11 @@ public class Controller implements Initializable {
      * Resets the t value so an other sorting method can be chosen.
      */
     private void ResetSort() {
+        sortselector.setDisable(false);
         t = null;
     }
 
-    public void SetSortString(ActionEvent actionEvent) {
-        sortstring = ((ComboBox) actionEvent.getSource()).getSelectionModel().getSelectedItem().toString();
+    public void SetSortString() {
+        sortstring = sortselector.getSelectionModel().getSelectedItem().toString();
     }
 }

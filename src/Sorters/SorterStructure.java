@@ -1,6 +1,8 @@
 package Sorters;
 
 import GUI.Controller;
+import javafx.application.Platform;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
@@ -8,7 +10,7 @@ import java.util.ArrayList;
  * SorterStructure class to give a standard structure to the
  * sorters on which the Controller class can rely.
  */
-class SorterStructure {
+abstract class SorterStructure {
     final ArrayList<Integer> list;
     final Controller controller;
     private final Object lock;
@@ -20,8 +22,8 @@ class SorterStructure {
     }
 
     /**
-     *  Will wait for a notify from somewhere
-     *  In this project it will be notified by the
+     * Will wait for a notify from somewhere
+     * In this project it will be notified by the
      */
     void WaitForButton() {
         synchronized (lock) {
@@ -31,5 +33,13 @@ class SorterStructure {
                 e.printStackTrace();
             }
         }
+    }
+
+    void DisplaySorted() {
+        for (int j = 0; j < list.size(); j++) {
+            Color col = Color.GREEN;
+            controller.drawBar(j, list.get(j), col);
+        }
+        Platform.runLater(() -> controller.AlertMessage("The list is sorted!"));
     }
 }

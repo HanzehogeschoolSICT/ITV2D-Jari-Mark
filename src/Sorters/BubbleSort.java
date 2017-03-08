@@ -1,7 +1,6 @@
 package Sorters;
 
 import GUI.Controller;
-import javafx.application.Platform;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
@@ -39,10 +38,6 @@ public class BubbleSort extends SorterStructure implements Runnable {
                 }
             }
         }
-        for (int j = 0; j < list.size(); j++) {
-            Color col = Color.GREEN;
-            controller.drawBar(j, list.get(j), col);
-        }
-        Platform.runLater(() -> controller.AlertMessage("The list is sorted!"));
+        DisplaySorted();
     }
 }

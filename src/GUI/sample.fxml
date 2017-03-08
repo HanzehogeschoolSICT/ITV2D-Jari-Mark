@@ -11,7 +11,7 @@
     <Canvas fx:id="barcanvas" height="400.0" width="500.0"/>
     <Pane prefHeight="54.0" prefWidth="200.0" GridPane.rowIndex="1">
         <Button layoutX="14.0" layoutY="12.0" mnemonicParsing="false" onAction="#DoStep" text="Step"/>
-        <ComboBox layoutX="336.0" layoutY="12.0" prefWidth="150.0" onAction="#SetSortString" promptText="BubbleSort" >
+        <ComboBox fx:id="sortselector" layoutX="336.0" layoutY="12.0" prefWidth="150.0" onAction="#SetSortString" promptText="BubbleSort" >
             <items>
                 <FXCollections fx:factory="observableArrayList" >
                     <String fx:value="BubbleSort" />
