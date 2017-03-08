@@ -2,6 +2,7 @@ package GUI;
 
 import Sorters.BubbleSort;
 import Sorters.InsertionSort;
+import Sorters.QuickSort;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -144,7 +145,7 @@ public class Controller implements Initializable {
                     break;
 
                 case "QuickSort":
-                    // TODO instantiate quicksort thread
+                    t = new Thread(new QuickSort(list,this,lock));
                     break;
 
                 default:

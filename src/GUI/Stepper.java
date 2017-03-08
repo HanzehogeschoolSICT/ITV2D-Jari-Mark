@@ -15,7 +15,7 @@ public class Stepper implements Runnable {
                 lock.notify();
             }
             try {
-                Thread.sleep(1000);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
