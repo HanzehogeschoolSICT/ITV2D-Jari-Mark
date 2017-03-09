@@ -1,20 +1,21 @@
 package Control;
 
 import Model.Model;
-import Sorters.BubbleSort;
+import javafx.event.ActionEvent;
+import javafx.scene.control.ComboBox;
 
-public class Controller {
-    private Model model;
+public class Controller extends AbstractController{
 
     public Controller(Model model) {
-        this.model = model;
+        super(model);
     }
 
     public void DoStep() {
-        new Thread(new BubbleSort(model.getList()));
+        model.OneBubbleStep();
     }
 
-    public void SetSortString() {
+    public void SetSortString(ActionEvent event) {
+        model.setSortstring(((ComboBox)event.getSource()).getSelectionModel().getSelectedItem().toString());
     }
 
     public void DoCompleteSort() {
