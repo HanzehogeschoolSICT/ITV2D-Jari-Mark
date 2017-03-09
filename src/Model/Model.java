@@ -1,20 +1,16 @@
 package Model;
 
-import View.AbstractView;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Model implements Runnable {
+public class Model {
     private static ArrayList<Integer> list;
-    private static ArrayList<AbstractView> views;
     public int n = 10;
-    boolean run = true;
     private String sortstring;
 
     public Model() {
-        views = new ArrayList<>();
         list = new ArrayList<>();
         for (int i = 1; i <= n; i++) {
             list.add(i);
@@ -24,36 +20,6 @@ public class Model implements Runnable {
             int temp = list.remove(random.nextInt(list.size()));
             list.add(temp);
         }
-    }
-
-    @Override
-    public void run() {
-        while (run) {
-            UpdateViews();
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public void start() {
-        new Thread(this).start();
-    }
-
-    private void UpdateViews() {
-        for (AbstractView view : views) {
-            view.Update();
-        }
-    }
-
-    public void AddView(AbstractView view) {
-        views.add(view);
-    }
-
-    public void OneBubbleStep() {
-        System.out.println("bubblestep");
     }
 
     public ArrayList<Bar> getBars() {
