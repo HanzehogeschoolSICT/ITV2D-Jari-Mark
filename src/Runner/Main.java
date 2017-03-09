@@ -16,21 +16,20 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Model model = new Model();
         BorderPane root = new BorderPane();
-        FXMLLoader ControlLoader = new FXMLLoader(getClass().getResource("/res/Controls.fxml"));
-        ControlLoader.setController(new Controller(model));
-        root.setCenter(ControlLoader.load());
 
         AbstractView bar = new BarChartView(model);
         FXMLLoader CanvasLoader = new FXMLLoader(getClass().getResource("/res/Canvas.fxml"));
         CanvasLoader.setController(bar);
-        model.AddView(bar);
         root.setTop(CanvasLoader.load());
+
+        FXMLLoader ControlLoader = new FXMLLoader(getClass().getResource("/res/Controls.fxml"));
+        ControlLoader.setController(new Controller(model, bar));
+        root.setCenter(ControlLoader.load());
 
         Scene scene = new Scene(root);
         primaryStage.setTitle("MVCTest");
         primaryStage.setScene(scene);
         primaryStage.show();
-        model.start();
     }
 
 

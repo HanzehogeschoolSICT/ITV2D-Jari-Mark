@@ -1,6 +1,8 @@
 package View;
 
-import Model.*;
+import Model.Bar;
+import Model.Model;
+import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -9,6 +11,7 @@ import javafx.scene.text.TextAlignment;
 import java.util.ArrayList;
 
 public class BarChartView extends AbstractView {
+    @FXML
     public Canvas barcanvas;
     private GraphicsContext gc;
 
@@ -17,11 +20,11 @@ public class BarChartView extends AbstractView {
     }
 
     @Override
-    public void Update() {
-        ArrayList<Bar> bars = model.getBars();
+    public void Update(ArrayList<Bar> bars) {
+        gc = barcanvas.getGraphicsContext2D();
+        clear();
         for (int i = 0; i < bars.size(); i++) {
             Bar current = bars.get(i);
-            gc = barcanvas.getGraphicsContext2D();
             int textheight = 20;
             int xoffset = (int) (barcanvas.getWidth() / model.n);
             int yoffset = (int) (barcanvas.getHeight() / model.n);
@@ -42,5 +45,9 @@ public class BarChartView extends AbstractView {
                     barcanvas.getHeight() - current.yaxis * yoffset + textheight);
         }
         System.out.println("Updating barchart");
+    }
+
+    private void clear() {
+        gc.clearRect(0, 0, barcanvas.getWidth(), barcanvas.getHeight());
     }
 }

@@ -1,6 +1,9 @@
 package View;
 
-import Model.Model;
+import Model.*;
+import javafx.scene.canvas.Canvas;
+
+import java.util.ArrayList;
 
 public abstract class AbstractView {
 
@@ -10,7 +13,6 @@ public abstract class AbstractView {
         this.model = model;
     }
 
-    public void Update() {
+    abstract public void Update(ArrayList<Bar> bars);
 
-    }
 }
