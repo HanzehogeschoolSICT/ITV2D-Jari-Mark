@@ -19,5 +19,5 @@
             </FXCollections>
         </items>
     </ComboBox>
-    <Button fx:id="sortbutton" layoutX="16.0" layoutY="66.0" mnemonicParsing="false" onAction="#DoCompleteSort" text="BubbleSorter"/>
+    <Button fx:id="sortbutton" layoutX="16.0" layoutY="66.0" mnemonicParsing="false" onAction="#DoCompleteSort" text="Complete sort"/>
 </Pane>

@@ -9,7 +9,6 @@ public class BubbleSorter {
         ClearColors(list);
         if (list.get(i).value > list.get(i + 1).value) {
             swap(list, i);
-            selectbars(list, i);
             return false;
         }
         i++;

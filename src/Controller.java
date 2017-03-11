@@ -17,6 +17,8 @@ public class Controller {
     public Controller(Model model, BarChartView barview) {
         this.model = model;
         this.barview = barview;
+        ArrayList<Bar> list = model.getList();
+        barview.draw(list, list.size());
     }
 
     public void DoStep() {
@@ -29,7 +31,17 @@ public class Controller {
             case "InsertionSort":
                 InsertionStep();
                 break;
+
+            case "QuickSort":
+                QuickStep();
+                break;
         }
+    }
+
+    private void QuickStep() {
+        model.QuickStep();
+        ArrayList<Bar> list = model.getList();
+        barview.draw(list, list.size());
     }
 
     private void LockSelector() {
@@ -37,7 +49,7 @@ public class Controller {
     }
 
     private void InsertionStep() {
-        System.out.println(model.InsertionStep());
+        model.InsertionStep();
         ArrayList<Bar> list = model.getList();
         barview.draw(list, list.size());
     }

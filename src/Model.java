@@ -9,15 +9,16 @@ public class Model {
     static ArrayList<Bar> list;
     static int n = 10;
     static int loops = 0;
-
     @FXML
     public Canvas barcanvas;
-    BubbleSorter bubblesorter;
-    InsertionSorter insertionsorter;
+    private QuickSorter quicksorter;
+    private BubbleSorter bubblesorter;
+    private InsertionSorter insertionsorter;
 
     public Model() {
         bubblesorter = new BubbleSorter();
         insertionsorter = new InsertionSorter();
+        quicksorter = new QuickSorter();
         list = new ArrayList<>();
         randomize(list);
     }
@@ -49,6 +50,10 @@ public class Model {
 
     public boolean InsertionStep() {
         return insertionsorter.step(list);
+    }
+
+    public boolean QuickStep() {
+        return quicksorter.step(list);
     }
 
     public ArrayList<Bar> getList() {
