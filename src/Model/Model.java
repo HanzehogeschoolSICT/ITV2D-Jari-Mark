@@ -7,13 +7,13 @@ public class Model {
     private static ArrayList<Integer> list;
     public int n = 10;
     private String sortstring;
-    private Bubblesort bubblesorter;
+    private BubbleSort bubblesorter;
 
 
 
     public Model() {
         list = new ArrayList<>();
-        bubblesorter = new Bubblesort();
+        bubblesorter = new BubbleSort();
 
         for (int i = 1; i <= n; i++) {
             list.add(i);

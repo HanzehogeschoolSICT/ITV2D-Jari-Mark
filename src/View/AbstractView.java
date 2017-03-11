@@ -1,7 +1,7 @@
 package View;
 
-import Model.*;
-import javafx.scene.canvas.Canvas;
+import Model.Bar;
+import Model.Model;
 
 import java.util.ArrayList;
 
