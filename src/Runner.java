@@ -1,29 +1,26 @@
-package Runner;
-
-import Control.Controller;
-import Model.Model;
-import View.AbstractView;
-import View.BarChartView;
 import javafx.application.Application;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+public class Runner extends Application {
+
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
-        Model model = new Model();
+    public void start(Stage primaryStage) throws Exception {
         BorderPane root = new BorderPane();
 
-        AbstractView bar = new BarChartView(model);
+        Model model = new Model();
+
+        BarChartView barview = new BarChartView(model);
         FXMLLoader CanvasLoader = new FXMLLoader(getClass().getResource("/res/Canvas.fxml"));
-        CanvasLoader.setController(bar);
+        CanvasLoader.setController(barview);
         root.setTop(CanvasLoader.load());
 
         FXMLLoader ControlLoader = new FXMLLoader(getClass().getResource("/res/Controls.fxml"));
-        ControlLoader.setController(new Controller(model, bar));
+        ControlLoader.setController(new Controller(model, barview));
         root.setCenter(ControlLoader.load());
 
         Scene scene = new Scene(root);
@@ -31,7 +28,6 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-
 
     public static void main(String[] args) {
         launch(args);
