@@ -3,8 +3,6 @@ package GUI;
 import Sorters.BubbleSort;
 import Sorters.InsertionSort;
 import Sorters.QuickSort;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
@@ -12,6 +10,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 
@@ -23,16 +22,29 @@ import java.util.ResourceBundle;
 public class Controller implements Initializable {
     @FXML
     public Button sortbutton;
+    @FXML
+    public TextField intervaltext;
     private Thread t = null;
     private int n = 10;
     private GraphicsContext gc;
     private ArrayList<Integer> list;
     private Object lock;
     private String sortstring = "BubbleSort";
+    private int timeinterval = 100;
+
     @FXML
     private Canvas barcanvas;
     @FXML
     private ComboBox sortselector;
+
+    public void setTimeInterval() {
+        try {
+            System.out.println(intervaltext.getPromptText());
+            timeinterval = Integer.parseInt(intervaltext.getText());
+        } catch (Exception e){
+            timeinterval = 100;
+        }
+    }
 
     /**
      * Initializes the list, randomizes it and draws it on the canvas.
@@ -128,8 +140,9 @@ public class Controller implements Initializable {
     }
 
     public void DoCompleteSort() {
+        setTimeInterval();
         StartThread();
-        new Thread(new Stepper(t, lock)).start();
+        new Thread(new Stepper(t, lock, timeinterval)).start();
     }
 
     private void StartThread() {
@@ -145,7 +158,7 @@ public class Controller implements Initializable {
                     break;
 
                 case "QuickSort":
-                    t = new Thread(new QuickSort(list,this,lock));
+                    t = new Thread(new QuickSort(list, this, lock));
                     break;
 
                 default:
