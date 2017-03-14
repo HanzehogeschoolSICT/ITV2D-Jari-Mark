@@ -1,5 +1,6 @@
-import javafx.fxml.FXML;
-import javafx.scene.canvas.Canvas;
+package Model;
+
+import Model.Sorters.*;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
@@ -8,19 +9,17 @@ import java.util.Random;
 public class Model {
     static ArrayList<Bar> list;
     static int n = 10;
-    static int loops = 0;
-    @FXML
-    public Canvas barcanvas;
+
     private QuickSorter quicksorter;
     private BubbleSorter bubblesorter;
     private InsertionSorter insertionsorter;
 
     public Model() {
-        bubblesorter = new BubbleSorter();
-        insertionsorter = new InsertionSorter();
-        quicksorter = new QuickSorter();
         list = new ArrayList<>();
         randomize(list);
+        bubblesorter = new BubbleSorter(new ArrayList<>(list));
+        insertionsorter = new InsertionSorter(new ArrayList<>(list));
+        quicksorter = new QuickSorter(new ArrayList<>(list));
     }
 
     private static void randomize(ArrayList<Bar> list) {
@@ -34,26 +33,16 @@ public class Model {
         }
     }
 
-    public boolean BubbleStep() {
-        if (n - loops - 1 > 0) {
-            if (bubblesorter.step(list, loops)) {
-                loops++;
-            }
-        } else {
-            for (int i = 0; i < list.size(); i++) {
-                list.get(i).setColor(Color.GREEN);
-            }
-            return true;
-        }
-        return false;
+    public ArrayList<Bar> BubbleStep() {
+        return bubblesorter.pop();
     }
 
-    public boolean InsertionStep() {
-        return insertionsorter.step(list);
+    public ArrayList<Bar> InsertionStep() {
+        return insertionsorter.pop();
     }
 
-    public boolean QuickStep() {
-        return quicksorter.step(list);
+    public ArrayList<Bar> QuickStep() {
+        return quicksorter.pop();
     }
 
     public ArrayList<Bar> getList() {

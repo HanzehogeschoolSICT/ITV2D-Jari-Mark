@@ -1,3 +1,6 @@
+import Control.Controller;
+import Model.Model;
+import View.BarChartView;
 import javafx.application.Application;
 
 import javafx.fxml.FXMLLoader;
@@ -14,7 +17,7 @@ public class Runner extends Application {
 
         Model model = new Model();
 
-        BarChartView barview = new BarChartView(model);
+        BarChartView barview = new BarChartView();
         FXMLLoader CanvasLoader = new FXMLLoader(getClass().getResource("/res/Canvas.fxml"));
         CanvasLoader.setController(barview);
         root.setTop(CanvasLoader.load());

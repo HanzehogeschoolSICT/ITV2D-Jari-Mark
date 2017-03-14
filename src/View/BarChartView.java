@@ -1,3 +1,6 @@
+package View;
+
+import Model.*;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -10,18 +13,12 @@ public class BarChartView {
     private static final int textheight = 20;
     @FXML
     public Canvas barcanvas;
-    Model model;
     GraphicsContext gc;
 
-    public BarChartView(Model model) {
-        this.model = model;
-    }
-
-    void draw(ArrayList<Bar> list, int n) {
+    public void draw(ArrayList<Bar> list, int n) {
         gc = barcanvas.getGraphicsContext2D();
         ClearCanvas(gc);
         DrawBars(list, n);
-
     }
 
     private void DrawBars(ArrayList<Bar> list, int n) {
