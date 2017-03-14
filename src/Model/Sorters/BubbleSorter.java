@@ -33,14 +33,4 @@ public class BubbleSorter extends AbstractSorter{
         list.get(i).setColor(Color.GREEN);
         list.get(i - 1).setColor(Color.GREEN);
     }
-
-    public ArrayList<Bar> pop() {
-        ArrayList<Bar> temp;
-        try {
-            temp = stack.remove(0);         // Return next step.
-        } catch (Exception e) {
-            return AllGreen();          // The list is sorted.
-        }
-        return temp;
-    }
 }

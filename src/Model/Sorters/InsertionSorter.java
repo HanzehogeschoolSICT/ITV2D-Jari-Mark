@@ -34,6 +34,4 @@ public class InsertionSorter extends AbstractSorter {
         } catch (Exception ignored) {
         }
     }
-
-
 }

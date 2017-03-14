@@ -48,15 +48,4 @@ public class QuickSorter extends AbstractSorter {
         list.get(index2).setColor(Color.GREEN);
         list.get(pivot).setColor(Color.BLUE);
     }
-
-
-    public ArrayList<Bar> pop() {
-        ArrayList<Bar> temp;
-        try {
-            temp = stack.remove(0);         // Return next step.
-        } catch (Exception e) {
-            return AllGreen();          // The list is sorted.
-        }
-        return temp;
-    }
 }
