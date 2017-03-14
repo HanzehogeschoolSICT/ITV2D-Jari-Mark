@@ -8,5 +8,7 @@ By Mark & Jari
 ## Sources
 
 [Bubble sort](https://en.wikipedia.org/wiki/Bubble_sort)
+
 [Quick sort](https://en.wikipedia.org/wiki/Quicksort)
+
 [Insertion sort](https://en.wikipedia.org/wiki/Insertion_sort)
