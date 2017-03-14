@@ -1,4 +1,4 @@
-[![BCH compliance](https://bettercodehub.com/edge/badge/LittleBoxOfChicken/OOP3)](https://bettercodehub.com/)
+[![BCH compliance](https://bettercodehub.com/edge/badge/HanzehogeschoolSICT/ITV2D-Jari-Mark)](https://bettercodehub.com/)
 
 # OOP3 Sorting assignment
 OOP3 assignment for sorting
