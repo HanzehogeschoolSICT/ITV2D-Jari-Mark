@@ -6,13 +6,10 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.Stack;
 
-public class QuickSorter {
-    private final ArrayList<Bar> list;
-    Stack<ArrayList<Bar>> stack;
+public class QuickSorter extends AbstractSorter {
 
     public QuickSorter(ArrayList<Bar> list) {
-        this.list = list;
-        stack = new Stack<>();
+        super(list);
         sort();
     }
 
@@ -52,19 +49,6 @@ public class QuickSorter {
         list.get(pivot).setColor(Color.BLUE);
     }
 
-    private void swap(int index1, int index2) {
-        ClearColors();
-        int temp1 = list.get(index1).value;
-        int temp2 = list.get(index2).value;
-        list.set(index1, new Bar(temp2, Color.RED));
-        list.set(index2, new Bar(temp1, Color.RED));
-    }
-
-    private void ClearColors() {
-        for (int j = 0; j < list.size(); j++) {
-            list.set(j, new Bar(list.get(j).value, Color.RED));
-        }
-    }
 
     public ArrayList<Bar> pop() {
         ArrayList<Bar> temp;
@@ -74,12 +58,5 @@ public class QuickSorter {
             return AllGreen();          // The list is sorted.
         }
         return temp;
-    }
-
-    private ArrayList<Bar> AllGreen() {
-        for (int i = 0; i < list.size(); i++) {
-            list.get(i).setColor(Color.GREEN);
-        }
-        return list;
     }
 }
