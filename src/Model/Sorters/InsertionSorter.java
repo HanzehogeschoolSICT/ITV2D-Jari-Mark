@@ -29,9 +29,7 @@ public class InsertionSorter extends AbstractSorter {
     private void selectbars(int i) {
         ClearColors();
         list.get(i).setColor(Color.GREEN);
-        try {
+        if(i - 1 >= 0)
             list.get(i - 1).setColor(Color.GREEN);
-        } catch (Exception ignored) {
-        }
     }
 }
