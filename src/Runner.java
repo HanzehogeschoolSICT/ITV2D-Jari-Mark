@@ -27,7 +27,7 @@ public class Runner extends Application {
         root.setCenter(ControlLoader.load());
 
         Scene scene = new Scene(root);
-        primaryStage.setTitle("MVCTest");
+        primaryStage.setTitle("Sorting");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
